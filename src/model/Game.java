@@ -4,18 +4,16 @@ import java.util.Scanner;
 
 public class Game {
     //fields
-    boolean newGame = false; //flag is set to true only when the player wants to start a new game
-    int count; //counter to keep track of the players remaining lives
-    String word; //Randomly picked word for the player to guess
-    String update; //updates the player's progress by adding letters when guessed right
-    String alphabet; //shows the player which letters they already guessed
-    char input; //variable to stored player input when guessing
+    private boolean newGame = false; //flag is set to true only when the player wants to start a new game
+    private int count; //counter to keep track of the players remaining lives
+    private String word; //Randomly picked word for the player to guess
+    private String update; //updates the player's progress by adding letters when guessed right
+    private String alphabet; //shows the player which letters they already guessed
 
     //default constructor left empty until needed
     public Game(){
         this.newGame = false;
         this.count = 0;
-
     }
 
     /**
@@ -106,11 +104,7 @@ public class Game {
         Update myUpdate = new Update();
         String message="";
         while(!(update.equals(word))) {
-            if (count == 8) {
-                Screen currentScreen = new Screen(count);
-                System.out.println("You guessed wrong too many times.\n" +
-                        "You're hanged man!");
-                System.out.println("The right word was: "+word+".\n");
+            if (gameOver()){
                 break;
             }
             Screen currentScreen = new Screen(count);
@@ -132,7 +126,8 @@ public class Game {
                 }
             }
             try {
-                input = nameGuess.charAt(0);
+                //variable to stored player input when guessing
+                char input = nameGuess.charAt(0);
                 alphabet = alphabet.replace(input, '_');
                 if (letterCheck(word, input)) {
                     update = myUpdate.updateProgress(word, update, input);
@@ -150,6 +145,17 @@ public class Game {
             Screen currentScreen = new Screen(count);
             System.out.println(" -~" + word + "~-\nWell done! \nYou've escaped the noose\n...for now.");
         }
+    }
+
+    public boolean gameOver(){
+        if (count == 8) {
+            Screen currentScreen = new Screen(count);
+            System.out.println("You guessed wrong too many times.\n" +
+                    "You're hanged man!");
+            System.out.println("The right word was: "+word+".\n");
+            return true;
+        }
+        return false;
     }
 
     /**
