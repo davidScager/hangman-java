@@ -13,6 +13,9 @@ public class Game {
 
     //default constructor left empty until needed
     public Game(){
+        this.newGame = false;
+        this.count = 0;
+
     }
 
     /**
